@@ -4,7 +4,7 @@ import axios from "axios";
 const token = "HeDKyixt_yMhR4TOvL4HNktaOxga-mgLkUcF";
 
 const useFetch = (dataType = "yearly") => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -21,11 +21,12 @@ const useFetch = (dataType = "yearly") => {
 
     try {
       const response = await axios.request(options);
-      setData(response.data);
+      setData(response.data.data);
       setIsLoading(false);
     } catch (error) {
       setError(error);
       alert("Opsie, error!");
+      console.log(error);
     } finally {
       setIsLoading(false);
     }

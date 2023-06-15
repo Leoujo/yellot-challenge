@@ -1,13 +1,11 @@
 import { Text, View, StyleSheet } from "react-native";
 import useFetch from "../hook/useFetch";
+import { Chart } from "../components/Chart";
 
 const Home = () => {
-  const { data, isLoading, error } = useFetch();
-  
-  console.log(data)
   return (
     <View style={styles.container}>
-		{!isLoading ? <Text>Carregou</Text> : <Text>Carregando...</Text>}  
+      <Chart />
     </View>
   );
 };
