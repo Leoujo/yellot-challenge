@@ -5,6 +5,7 @@ import { ActivityIndicator } from "react-native";
 
 import useFetch from "../../hook/useFetch";
 import moment from "moment";
+import { CustomTable } from "../CustomTable";
 
 export const Chart = () => {
   const { data, isLoading, error } = useFetch("daily");
@@ -26,9 +27,18 @@ export const Chart = () => {
     return onlyEvenDays;
   };
 
+  const isGeneratingEnergyToday = () => {
+    var today = moment(new Date()).format("YYYY-MM-DD");
+    if (!data.x_labels.includes(today.toString())) {
+      return "não";
+    }
+    return null;
+  };
+
   return (
     <>
-      <Text style={styles.header}>Generation in {moment(data.x_labels[0]).format("MM-YYYY")}</Text>
+      <Text style={styles.header}>Geração de energia X tempo ({moment(data.x_labels[0]).format("MM-YYYY")})</Text>
+      <Text style={styles.subHeader}>{`A minha usina ${isGeneratingEnergyToday()} está gerando hoje`}</Text>
       <LineChart
         data={{
           labels: showOnlyDay(data.x_labels),
@@ -56,6 +66,7 @@ export const Chart = () => {
           borderRadius: 16,
         }}
       />
+      <CustomTable data={data} />
     </>
   );
 };
@@ -75,4 +86,9 @@ const styles = StyleSheet.create({
     padding: 16,
     marginTop: 16,
   },
+  subHeader: {
+	textAlign: "center",
+	fontSize: 12,
+	margin: 2,
+  }
 });
