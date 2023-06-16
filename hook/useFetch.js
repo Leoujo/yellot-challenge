@@ -22,11 +22,9 @@ const useFetch = (dataType = "yearly") => {
     try {
       const response = await axios.request(options);
       setData(response.data.data);
-      setIsLoading(false);
     } catch (error) {
       setError(error);
       alert("Opsie, error!");
-      console.log(error);
     } finally {
       setIsLoading(false);
     }
