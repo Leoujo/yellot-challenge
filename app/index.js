@@ -2,9 +2,12 @@ import { Text, View, StyleSheet, ActivityIndicator } from "react-native";
 import useFetch from "../hook/useFetch";
 import { Chart } from "../components/Chart";
 import { CustomTable } from "../components/CustomTable";
+import { FilterPicker } from "../components/FilterPicker";
+import { useState } from "react";
 
 const Home = () => {
-  const { data, isLoading, error } = useFetch("daily");
+  const [filterOption, setFilterOption] = useState("monthly");
+  const { data, isLoading, error } = useFetch(filterOption);
   if (isLoading) {
     return <ActivityIndicator size="large" />;
   }
@@ -14,6 +17,7 @@ const Home = () => {
   }
   return (
     <View style={styles.container}>
+      <FilterPicker filterOption={filterOption} setFilterOption={setFilterOption} />
       <Chart data={data} />
       <CustomTable data={data} />
     </View>

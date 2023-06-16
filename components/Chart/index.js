@@ -40,7 +40,7 @@ export const Chart = ({ data }) => {
               color: () => "#002f5c",
             },
           ],
-			 legend: ['generation', 'expected']
+			 legend: ['gerado', 'esperado']
         }}
         width={Dimensions.get("window").width - 16}
         height={220}
