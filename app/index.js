@@ -8,18 +8,31 @@ import { useState } from "react";
 const Home = () => {
   const [filterOption, setFilterOption] = useState("monthly");
   const { data, isLoading, error } = useFetch(filterOption);
-  if (isLoading) {
-    return <ActivityIndicator size="large" />;
-  }
 
-  if (error || !data) {
-    return <Text>Error! Try again later.</Text>;
+  const filterHandler = (type) => {
+    if (type !== null) {
+      setFilterOption(type);
+    }
+  };
+
+  if (error) {
+    return (
+      <View style={styles.container}>
+        <Text style={{ textAlign: "center" }}>Error! Try again later.</Text>
+      </View>
+    );
   }
   return (
     <View style={styles.container}>
-      <FilterPicker filterOption={filterOption} setFilterOption={setFilterOption} />
-      <Chart data={data} />
-      <CustomTable data={data} />
+      {!isLoading && data ? (
+        <>
+          <FilterPicker filterOption={filterOption} filterHandler={filterHandler} />
+          <Chart data={data} />
+          <CustomTable data={data} />
+        </>
+      ) : (
+        <ActivityIndicator size="large" />
+      )}
     </View>
   );
 };

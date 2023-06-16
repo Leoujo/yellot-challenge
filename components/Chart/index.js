@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { Text, StyleSheet, Dimensions } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 import moment from "moment";
@@ -12,22 +12,14 @@ export const Chart = ({ data }) => {
     return null;
   };
 
-  const showOnlyDay = (value) => {
-    for (var i in value) {
-      value[i] = value[i].split("-")[2];
-    }
-    let onlyEvenDays = [];
-    onlyEvenDays = value.filter((v) => v % 2 == 0);
-    return onlyEvenDays;
-  };
-
   return (
     <>
-      <Text style={styles.header}>Geração de energia X tempo ({moment(data.x_labels[0]).format("MM/YYYY")})</Text>
+      <Text style={styles.header}>Geração de energia X tempo</Text>
       <Text style={styles.subHeader}>{`A minha usina ${isGeneratingEnergyToday()} está gerando hoje`}</Text>
       <LineChart
+        verticalLabelRotation={90} //Degree to rotate
         data={{
-          labels: showOnlyDay(data.x_labels),
+          labels: data.x_labels,
           datasets: [
             {
               data: data.generation,
@@ -40,10 +32,10 @@ export const Chart = ({ data }) => {
               color: () => "#002f5c",
             },
           ],
-			 legend: ['gerado', 'esperado']
+          legend: ["gerado", "esperado"],
         }}
         width={Dimensions.get("window").width - 16}
-        height={220}
+        height={500}
         chartConfig={{
           backgroundGradientFrom: "#fff",
           backgroundGradientFromOpacity: 0,

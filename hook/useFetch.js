@@ -3,7 +3,7 @@ import axios from "axios";
 
 const token = "HeDKyixt_yMhR4TOvL4HNktaOxga-mgLkUcF";
 
-const useFetch = (dataType = "yearly") => {
+const useFetch = (dataType) => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -26,12 +26,13 @@ const useFetch = (dataType = "yearly") => {
       alert("Opsie, error!");
     } finally {
       setIsLoading(false);
+	
     }
   };
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [dataType]);
 
   // The most important part of the useFetch is return data
   return { data, isLoading, error };
